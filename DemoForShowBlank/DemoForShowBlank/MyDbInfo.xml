@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BeginDBInfo>
+    <DetailInfo id="0">
+        <Station></Station>
+        <OddNumbers></OddNumbers>
+        <SN>2</SN>
+        <Product></Product>
+        <BeginTime>2019-05-28 21:39:21</BeginTime>
+        <EndTime></EndTime>
+        <BurnInState>0</BurnInState>
+    </DetailInfo>
+    <DetailInfo id="1">
+        <Station></Station>
+        <OddNumbers>77</OddNumbers>
+        <SN>4</SN>
+        <Product></Product>
+        <BeginTime></BeginTime>
+        <EndTime>2019-05-28 21:39:21</EndTime>
+        <BurnInState>0</BurnInState>
+    </DetailInfo>
+</BeginDBInfo>

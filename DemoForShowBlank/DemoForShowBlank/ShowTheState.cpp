@@ -5,6 +5,7 @@
 #include <QtCore/QXmlStreamWriter>
 #include <QtWidgets/QDateTimeEdit>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QMessageBox>
 #include <QtGui/QPainter>
 #include <QDebug>
 #include "MyTableView.h"
@@ -44,8 +45,8 @@ void ShowTheState::InitUI()
 	m_pModel = new QStandardItemModel(this);
 	QStringList strTitleList;
 	// 初始化表头
-	// 工位 工单 SN 产品 开始时间 结束时间 老化进度
-	strTitleList << tr("station") << tr("odd numbers") << tr("SN") << tr("product") << tr("Begin Time") << tr("End Time") << tr("burn-in state");
+	// 复选框 工位 工单 SN 产品 开始时间 结束时间 老化进度
+	strTitleList << tr("select") << tr("station") << tr("odd numbers") << tr("SN") << tr("product") << tr("Begin Time") << tr("End Time") << tr("burn-in state");
 	m_pModel->setColumnCount(strTitleList.size());
 	int nColIndex = 0;
 	foreach (QString strItemName , strTitleList)
@@ -99,34 +100,49 @@ void ShowTheState::OnModelOpen()
 			{
 				OnBtnAdd();
 			}
-			QString strTmp = rend.readElementText();
 			if (rend.name() == EnumToString(Station))
 			{
+				QString strTmp = rend.readElementText();
 				OnAddOneItem(Station, strTmp);
 			}
 			else if (rend.name() == EnumToString(OddNumbers))
 			{
+				QString strTmp = rend.readElementText();
 				OnAddOneItem(OddNumbers, strTmp);
 			}
 			else if (rend.name() == EnumToString(SN))
 			{
+				QString strTmp = rend.readElementText();
 				OnAddOneItem(SN, strTmp);
 			}
 			else if (rend.name() == EnumToString(Product))
 			{
+				QString strTmp = rend.readElementText();
 				OnAddOneItem(Product, strTmp);
 			}
 			else if (rend.name() == EnumToString(BeginTime))
 			{
+				QString strTmp = rend.readElementText();
 				OnAddOneItem(BeginTime, strTmp);
+				QStandardItem *item = m_pModel->item(m_pModel->rowCount() - 1, BurnInState);
+				if (NULL != item && !strTmp.isEmpty())
+				{
+					QString strTimeFormat = QString("yyyy-MM-dd hh:mm:ss");
+					QDateTime dateBeg = QDateTime::fromString(strTmp, strTimeFormat);
+					item->setData(dateBeg.toSecsSinceEpoch(), Qt::UserRole);
+				}
 			}
 			else if (rend.name() == EnumToString(EndTime))
 			{
+				QString strTmp = rend.readElementText();
 				OnAddOneItem(EndTime, strTmp);
-			}
-			else if (rend.name() == EnumToString(BurnInState))
-			{
-				OnAddOneItem(BurnInState, strTmp);
+				QStandardItem *item = m_pModel->item(m_pModel->rowCount() - 1, BurnInState);
+				if (NULL != item && !strTmp.isEmpty())
+				{
+					QString strTimeFormat = QString("yyyy-MM-dd hh:mm:ss");
+					QDateTime dateBeg = QDateTime::fromString(strTmp, strTimeFormat);
+					item->setData(dateBeg.toSecsSinceEpoch(), Qt::UserRole+1);
+				}
 			}
 		}
 		else if (rend.isEndElement())
@@ -180,7 +196,7 @@ void ShowTheState::OnModelClose()
 		xmlWirte.writeStartElement("DetailInfo");
 		xmlWirte.writeAttribute("id", QString::number(i));
 		QStandardItem *item = NULL;
-		for (int j = Station; j <= BurnInState; j++)
+		for (int j = Station; j < BurnInState; j++)
 		{
 			strTmp.clear();
 			item = m_pModel->item(i, j);
@@ -219,9 +235,6 @@ QString  ShowTheState::EnumToString(ColInfo_e iEnum)
 	case EndTime:
 		strRet = "EndTime";
 		break;
-	case BurnInState:
-		strRet = "BurnInState";
-		break;
 	default:
 		break;
 	}
@@ -236,13 +249,14 @@ void ShowTheState::resizeEvent(QResizeEvent *event)
 	int nHeadWidth = header->width();
 	int nTotalWidth = ui.m_wgtTotal->width()- nHeadWidth;
 
+	ui.m_tabView->setColumnWidth(SelectModel, 50 * nTotalWidth / 1000);
 	ui.m_tabView->setColumnWidth(Station, 50 * nTotalWidth / 1000);
 	ui.m_tabView->setColumnWidth(OddNumbers, 75 * nTotalWidth / 1000);
 	ui.m_tabView->setColumnWidth(SN, 75 * nTotalWidth / 1000);
 	ui.m_tabView->setColumnWidth(Product, 100 * nTotalWidth / 1000);
-	ui.m_tabView->setColumnWidth(BeginTime, 160 * nTotalWidth / 1000);
-	ui.m_tabView->setColumnWidth(EndTime, 160 * nTotalWidth / 1000);
-	ui.m_tabView->setColumnWidth(BurnInState, 380 * nTotalWidth / 1000);
+	ui.m_tabView->setColumnWidth(BeginTime, 150 * nTotalWidth / 1000);
+	ui.m_tabView->setColumnWidth(EndTime, 150 * nTotalWidth / 1000);
+	ui.m_tabView->setColumnWidth(BurnInState, 350 * nTotalWidth / 1000);
 
 	QWidget::resizeEvent(event);
 }
@@ -280,8 +294,17 @@ void ShowTheState::OnBtnAdd()
 	}
 
 	m_pModel->insertRow(m_pModel->rowCount());
+	//设置复选框
+	QStandardItem *itemSelect = new QStandardItem();
+	itemSelect->setCheckable(true);
+	itemSelect->setCheckState(Qt::Unchecked);
+	m_pModel->setItem(m_pModel->rowCount() - 1, SelectModel, itemSelect);
+
+	//设置进图条
 	QStandardItem *itemState = new QStandardItem(QString::number(0));
 	itemState->setData(0.0, Qt::DisplayRole);
+	itemState->setData(0, Qt::UserRole);
+	itemState->setData(0, Qt::UserRole + 1);
 	m_pModel->setItem(m_pModel->rowCount() - 1, BurnInState, itemState);
 	ui.m_tabView->setItemDelegateForColumn(BurnInState, m_pBarDelegate);
 
@@ -295,8 +318,25 @@ void ShowTheState::OnBtnDel()
 		return;
 	}
 
-	m_pModel->removeRow(m_pModel->rowCount()-1);
-	ui.m_tabView->setItemDelegateForColumn((int)BurnInState, m_pBarDelegate);
+	bool bSelect = false;
+	for (int iRow = 0; iRow < m_pModel->rowCount(); ++iRow)
+	{
+		QStandardItem *item = m_pModel->item(iRow, SelectModel);
+		if (item->checkState() == Qt::Checked)
+		{
+			m_pModel->removeRow(iRow);
+			bSelect = true;
+			iRow = 0;
+		}
+	}
+
+	if (!bSelect)
+	{
+		//提升选择一行
+		QMessageBox msg;
+		msg.setText(tr("please check on line first!"));
+		msg.exec();
+	}
 }
 
 void ShowTheState::OnMouseDoubleClickTimeModel()
@@ -368,6 +408,10 @@ void ShowTheState::OnRepaintTimeOut()
 			int64_t nTol = timeEnd - timeBeg;
 			val = (float)nLast / (float)nTol * float(100.0);
 		}
+		if (timeEnd < timeCur && timeBeg != 0 && timeEnd != 0)
+		{
+			val = 100.0;
+		}
 		std::unique_lock<std::mutex> myLockGd(m_myMutex);
 		itemBurState->setData(val, Qt::DisplayRole);
 	}
@@ -392,7 +436,7 @@ void BarDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, c
 
 	if (factor > 0.8)
 	{
-		painter->setBrush(Qt::red);
+		painter->setBrush(Qt::green);
 	}
 	else
 	{

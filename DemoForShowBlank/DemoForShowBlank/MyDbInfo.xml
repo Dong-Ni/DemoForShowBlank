@@ -3,19 +3,57 @@
     <DetailInfo id="0">
         <Station></Station>
         <OddNumbers></OddNumbers>
-        <SN>2</SN>
+        <SN>3</SN>
         <Product></Product>
-        <BeginTime>2019-05-28 21:39:21</BeginTime>
-        <EndTime></EndTime>
-        <BurnInState>0</BurnInState>
+        <BeginTime>2019-05-29 22:02:26</BeginTime>
+        <EndTime>2019-05-29 22:33:26</EndTime>
     </DetailInfo>
     <DetailInfo id="1">
         <Station></Station>
-        <OddNumbers>77</OddNumbers>
+        <OddNumbers></OddNumbers>
+        <SN>d</SN>
+        <Product></Product>
+        <BeginTime></BeginTime>
+        <EndTime></EndTime>
+    </DetailInfo>
+    <DetailInfo id="2">
+        <Station></Station>
+        <OddNumbers></OddNumbers>
+        <SN></SN>
+        <Product></Product>
+        <BeginTime></BeginTime>
+        <EndTime></EndTime>
+    </DetailInfo>
+    <DetailInfo id="3">
+        <Station></Station>
+        <OddNumbers></OddNumbers>
+        <SN></SN>
+        <Product></Product>
+        <BeginTime></BeginTime>
+        <EndTime></EndTime>
+    </DetailInfo>
+    <DetailInfo id="4">
+        <Station></Station>
+        <OddNumbers>sda</OddNumbers>
+        <SN></SN>
+        <Product></Product>
+        <BeginTime></BeginTime>
+        <EndTime></EndTime>
+    </DetailInfo>
+    <DetailInfo id="5">
+        <Station></Station>
+        <OddNumbers></OddNumbers>
+        <SN>d</SN>
+        <Product></Product>
+        <BeginTime></BeginTime>
+        <EndTime></EndTime>
+    </DetailInfo>
+    <DetailInfo id="6">
+        <Station></Station>
+        <OddNumbers></OddNumbers>
         <SN>4</SN>
         <Product></Product>
         <BeginTime></BeginTime>
-        <EndTime>2019-05-28 21:39:21</EndTime>
-        <BurnInState>0</BurnInState>
+        <EndTime></EndTime>
     </DetailInfo>
 </BeginDBInfo>

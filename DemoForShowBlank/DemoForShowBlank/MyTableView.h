@@ -5,13 +5,14 @@
 
 typedef enum ColInfo
 {
-	Station = 0,
-	OddNumbers = 1,
-	SN = 2,
-	Product = 3,
-	BeginTime = 4,
-	EndTime = 5,
-	BurnInState = 6,
+	SelectModel = 0,
+	Station = 1,
+	OddNumbers = 2,
+	SN = 3,
+	Product = 4,
+	BeginTime = 5,
+	EndTime = 6,
+	BurnInState = 7,
 
 }ColInfo_e;
 

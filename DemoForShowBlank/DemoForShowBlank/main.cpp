@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 	//º”‘ÿ∑≠“Î
 	QTranslator qtTrans;
 	//qtTrans.load("D://DEMO//DemoForBroExcel//ShowTheState//ShowTheState//showthestate_zh.qm");
-	qtTrans.load("./showthestate_zh.qm");
+	qtTrans.load("./demoforshowblank_zh.qm");
 	a.installTranslator(&qtTrans);
 
     ShowTheState w;

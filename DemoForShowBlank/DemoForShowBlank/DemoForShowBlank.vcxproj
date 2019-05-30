@@ -10,6 +10,28 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ShowTheState.ui" />
+    <QtUic Include="TimeSelect.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="MyTableView.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ShowTheState.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="TimeSelect.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="MyTableView.cpp" />
+    <ClCompile Include="ShowTheState.cpp" />
+    <ClCompile Include="TimeSelect.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="demoforshowblank_zh.ts" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B12702AD-ABFB-343A-A199-8E24837244A3}</ProjectGuid>
     <Keyword>Qt4VSv1.0</Keyword>
@@ -112,19 +134,6 @@
       <OutputFile>.\GeneratedFiles\qrc_%(Filename).cpp</OutputFile>
     </QtRcc>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="DemoForShowBlank.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="DemoForShowBlank.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="DemoForShowBlank.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="DemoForShowBlank.qrc" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />
